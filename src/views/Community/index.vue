@@ -1,8 +1,3 @@
-<script setup>
-
-</script>
-
-
 <template>
   <div class="box">
     <div class="head">
@@ -13,7 +8,7 @@
       </ul>
     </div>
     <div class="comment">
-      <img src="D:\01-大三前端\competition_manage\vue3-demo\src\assets\images\1.jpg" alt="图片未显示">
+      <img src="../../assets/images/1.jpg" alt="图片未显示">
       <div class="content">
         <el-text class="mx-1" type="warning">未解决</el-text>
         <span style="color: #909090 font-weight: 700;">名字xxx</span>
@@ -24,75 +19,86 @@
   </div>
 </template>
 
+<script setup>
+console.log(1123)
+</script>
+
+
 <style scoped lang='less'>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .head {
+.head {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  height: 50px;
+
+  ul {
     display: flex;
-    justify-content: space-between;
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+
+    li {
+      list-style: none;
+
+      a {
+        padding: 10px;
+        text-decoration: none;
+        color: #909090;
+      }
+
+      :hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.box {
+  margin: 30px auto;
+  width: 800px;
+  // background-color: pink;
+  height: 100vh;
+}
+
+.comment {
+  display: flex;
+  padding: 13px 0 0 13px;
+  padding-bottom: 0;
+
+  background-color: pink;
+
+  img {
+    width: 50px;
     height: 50px;
-    ul {
-      display: flex;
-      li {
-        list-style: none;
-        a {
-          padding: 10px;
-          text-decoration: none;
-          color: #909090;
-        }
-        :hover {
-          color: #000;
-        }  
-      }
-    }
+    border-radius: 50%;
+    margin-right: 20px;
+    cursor: pointer;
   }
 
-  .box {
-    margin: 30px auto;
-    width: 800px;
-    // background-color: pink;
-    height: 100vh; 
-  }
-
-  .comment {
+  .content {
+    position: relative;
     display: flex;
-    padding: 13px 0 0 13px;
-    padding-bottom: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #909090;
 
-    background-color: pink;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 20px;
-      cursor: pointer;
+    height: 100px;
+    width: 720px;
+
+    .el-text {
+      position: absolute;
+      right: 30px;
+      top: 10px;
+      font-size: 20px;
+      font-weight: 700;
     }
-    .content {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      border-bottom: 1px solid #909090;
-      
-      height: 100px;
-      width: 720px;
-      .el-text {
-        position: absolute;
-        right: 30px;
-        top: 10px;
-        font-size: 20px;
-        font-weight: 700;
-      }
 
-      .text {
-        margin-top: 6px;
-      }
+    .text {
+      margin-top: 6px;
     }
   }
-</style>
+}</style>

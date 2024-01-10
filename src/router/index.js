@@ -1,23 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Login from '@/views/Login/index.vue'
-import Layout from '@/views/Layout/index.vue'
-
-import Home from '@/views/Home/index.vue'
-import Community from '@/views/Community/index.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', 
-      component: Layout,
+    {
+      path: '/',
+      component: () => import('@/layouts/index.vue'),
       children: [
-        { path: '', component: Home },
-        { path: 'community', component: Community }
+        {
+          path: '',
+          name: 'Home',
+          component: () => import('@/views/home/index.vue')
+        },
+        {
+          path: 'community',
+          name: 'Community',
+          component: () => import('@/views/community/index.vue')
+        }
       ]
     },
-    { path: '/login', component: Login }
-    
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/login/index.vue')
+    }
+
   ]
 })
 
