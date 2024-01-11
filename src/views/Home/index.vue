@@ -4,7 +4,7 @@
       <el-main>
         <div class="list-box">
           <ul class="list">
-            <li class="list-item" v-for="item in renderList">
+            <li class="list-item" v-for="item in renderList" :key="item.key">
               <div class="info">
                 <h3>
                   <em>{{ item.status }}</em>
@@ -182,3 +182,5 @@ const jumpClick = (url) => {
   }
 }
 </style>
+
+
