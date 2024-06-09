@@ -14,11 +14,11 @@ export const useCompInfoStore = defineStore('compInfo', () => {
         },
         {
             id: '2',
-            status: '正在报名',
-            name: '全国大学生计算机应用能力与数字素养大赛暨第六届传智杯全国IT技能大赛专业信息技术——程序设计挑战赛道',
-            organizer: '全国高等院校计算机基础教育研究会',
-            level: '全国',
-            href: 'https://xxgk.sspu.edu.cn/2023/1115/c3149a119113/page.htm'
+            status: '已结束',
+            name: '个人程序设计天梯赛',
+            organizer: '上海第二工业大学',
+            level: '校级',
+            href: 'https://xxgk.sspu.edu.cn/2023/1225/c3149a146282/page.htm'
         },
         {
             id: '3',
