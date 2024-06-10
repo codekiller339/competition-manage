@@ -1,50 +1,57 @@
 <template>
   <div class="box">
     <div class="extra-image">
-      <img src="@/assets/images/R-C.jpg" width="400" height="380" />
+      <img
+        src="@/assets/images/R-C.jpg"
+        width="400"
+        height="380"
+      />
     </div>
     <div class="login-container">
       <h1>比赛信息平台</h1>
       <form>
-        <input v-model="dataForm.email" type="text" placeholder="邮箱" required />
-        <input v-model="dataForm.password" type="password" placeholder="密码" required />
-        <!-- <input
+        <input
+          v-model="dataForm.email"
           type="text"
-          id="captcha"
-          name="captcha"
+          placeholder="邮箱"
           required
-          class="captcha-input"
-          placeholder="验证码"
         />
-        <img
-          src="@/assets/images/R-C.png"
-          alt="验证码图片"
-          onclick="this.src='验证码图片地址？'+Math.random()"
-          width="80"
-          height="25"
-        /> -->
-        <el-button type="primary" style="width: 100%; margin-top: 16px;" @click="handleLogin">登录</el-button>
+        <input
+          v-model="dataForm.password"
+          type="password"
+          placeholder="密码"
+          required
+        />
+        <el-button
+          type="primary"
+          style="width: 100%; margin-top: 16px;"
+          @click="handleLogin"
+        >
+          登录
+        </el-button>
       </form>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">  
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, toRaw } from "vue";
 import { loginAPI } from "@/api/user"
 const dataForm = ref({
   email: "",
   password: ""
 })
 
-const handleLogin = () => {
-  console.log("确认登陆");
+const handleLogin = async () => {
+  const params = toRaw(dataForm.value)
+  const res = await loginAPI(params)
+  console.log(res)
 }
 
 </script>
 
 <style scoped>
- .box {
+.box {
   background-image: url('@/assets/images/bg.png');
   background-size: cover;
   display: flex;
@@ -62,13 +69,16 @@ const handleLogin = () => {
   width: 20%;
   height: 30%;
 }
+
 .extra-image {
   margin-right: 80px;
 }
+
 .login-container h1 {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .login-container input {
   display: block;
   width: 95%;
@@ -77,6 +87,7 @@ const handleLogin = () => {
   border: 1px solid #ccc;
   border-radius: 50px;
 }
+
 .login-container .btn {
   text-decoration: none;
   text-align: center;
