@@ -1,9 +1,9 @@
-import { ref, computed, reactive } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-
+import { getListAPI } from "@/api/user"
 
 export const useCompInfoStore = defineStore('compInfo', () => {
-    const list = ref([
+    /* const list = ref([
         {
             id: '1',
             status: '正在报名',
@@ -164,9 +164,20 @@ export const useCompInfoStore = defineStore('compInfo', () => {
             level: '省赛',
             href: 'https://xxgk.sspu.edu.cn/2023/1115/c3149a119113/page.htm'
         },
-    ])
+    ]) */
 
-    return { list }
+    const list = ref([])
+ 
+    const getList = async(params) => {
+        const { data } = await getListAPI(params)
+        list.value = data.list
+        console.log(list.value)
+    }
+
+    return { 
+        list,
+        getList
+    }
 }, {
     persist: true
 })

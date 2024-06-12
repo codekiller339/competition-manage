@@ -1,19 +1,21 @@
 import { defineStore } from 'pinia';
 import { loginAPI } from "@/api/user";
 import { ref } from 'vue';
+import router from "@/router"
 
 export const useUserStore = defineStore("user", () => {
-  const token = ref(localStorage.getItem('token') || "");
-
-  async function login(userData) {  
-    const res = await loginAPI(userData);
-    const { data } = res.data;
-    setToken(data.token);
-  }
+  const token = localStorage.getItem('token') || ""
 
   function setToken(newToken) {
     token.value = newToken;
-    localStorage.setItem(newToken);
+    localStorage.setItem('token', newToken);
+  }
+  async function login(userData) {  
+    const { data } = await loginAPI(userData)
+    console.log(data);
+    setToken(data.token);
+    console.log("登录成功 token", token);
+    router.push('/')
   }
 
   function logout() {

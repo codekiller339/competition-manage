@@ -44,14 +44,13 @@ const dataForm = ref({
   password: ""
 })
 
-const userStore = useUserStore()
+const { login } = useUserStore()
 
 const handleLogin = async () => {
 /*   const params = toRaw(dataForm.value)
   const res = await loginAPI(params)
   console.log(res) */
-  const params = toRaw(dataForm.value)
-  const res = await userStore.login(params)
+  const res = await login(dataForm.value)
   console.log(res)
 }
 

@@ -1,11 +1,11 @@
 import router from '@/router'
 import store from '@/stores'
 import axios from 'axios'
-// import { Message } from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   // 基地址(每个接口都有的地址); 作用: 后面封装的接口, 接口的地址都会和baseURL自动拼接到一起
-  baseURL: 'https://6496pv27lr81.vicp.fun/',
+  baseURL: 'http://10.200.59.220:9880/',
   // 超时时间
   timeout: 5000 // request timeout
 })
@@ -34,7 +34,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     if (response.data.code != 1) {
-      Message.error(response.data.msg)
+      ElMessage.error(response.data.msg)
       return Promise.reject(response.data)
     } else {
       return response.data

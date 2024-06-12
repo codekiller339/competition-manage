@@ -34,7 +34,7 @@
 <script setup>
 import { useCompInfoStore } from '@/stores/index'
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { debounce } from 'lodash'
 
 const RENDER_NUM = 4
@@ -42,6 +42,14 @@ const RENDER_NUM = 4
 const compInfoStore = useCompInfoStore()
 const { list } = storeToRefs(compInfoStore)
 const renderList = ref([])
+
+const params = {
+  pageSize: 1,
+  pageId: 0
+}
+onMounted(() => { 
+  compInfoStore.getList(params)
+})
 
 const initRenderList = () => {
   for (let i = renderList.value.length; i < RENDER_NUM && i < list.value.length; i++) {
