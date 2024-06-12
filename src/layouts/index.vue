@@ -3,7 +3,12 @@
     <el-container style="height: 100vh;">
       <el-container>
         <el-header>
-          <el-menu default-active="/" class="el-menu-demo" mode="horizontal" router>
+          <el-menu
+            default-active="/"
+            class="el-menu-demo"
+            mode="horizontal"
+            router
+          >
             <el-menu-item index="/">
               首页
             </el-menu-item>
@@ -13,12 +18,31 @@
 
             <el-row class="menu-right">
               <el-row :gutter="24">
-                <el-col :span="14" class="search">
-                  <el-input placeholder="搜索" suffix-icon="el-icon-search" clearable v-model="searchText"></el-input>
+                <el-col
+                  :span="14"
+                  class="search"
+                >
+                  <el-input
+                    placeholder="搜索"
+                    suffix-icon="el-icon-search"
+                    clearable
+                    v-model="searchText"
+                  ></el-input>
                 </el-col>
-                <el-col :span="10" class="btn">
-                  <el-button v-if="userStore.token" type="text" @click="jumpLogin">登录</el-button>
-                  <el-button v-else @click="Logout" type="text">退出登录</el-button>
+                <el-col
+                  :span="10"
+                  class="btn"
+                >
+                  <el-button
+                    v-if="!token"
+                    type="text"
+                    @click="jumpLogin"
+                  >登录</el-button>
+                  <el-button
+                    v-else
+                    @click="Logout"
+                    type="text"
+                  >退出登录</el-button>
                 </el-col>
               </el-row>
             </el-row>
@@ -36,14 +60,14 @@
 import router from '@/router';
 import { useUserStore } from "@/stores"
 
-const userStore = useUserStore()
+const { token } = useUserStore()
 
 const jumpLogin = () => {
   router.push("/login")
 }
 const Logout = () => {
   userStore.logout()
-  router.push("/login") 
+  router.push("/login")
 }
 
 </script>

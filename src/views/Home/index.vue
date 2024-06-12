@@ -4,18 +4,29 @@
       <el-main>
         <div class="list-box">
           <ul class="list">
-            <li class="list-item" v-for="item in renderList" :key="item.key">
+            <li
+              class="list-item"
+              v-for="item in renderList"
+              :key="item.key"
+            >
               <div class="info">
                 <h3>
                   <em>{{ item.status }}</em>
-                  <a :href="item.href" target="_blank">{{ item.name }}</a>
+                  <a
+                    :href="item.href"
+                    target="_blank"
+                  >{{ item.name }}</a>
                 </h3>
                 <p><span>主办方</span> {{ item.organizer }}</p>
                 <p><span>竞赛类别</span> {{ item.level }}</p>
               </div>
               <div class="info-btn">
                 <el-row>
-                  <el-button @click="jumpClick(item.href)" type="success" plain>比赛详情</el-button>
+                  <el-button
+                    @click="jumpClick(item.href)"
+                    type="success"
+                    plain
+                  >比赛详情</el-button>
                 </el-row>
               </div>
             </li>
@@ -24,7 +35,10 @@
       </el-main>
       <el-footer class="bottom">
         <div class="pagination">
-          <el-pagination :total="5" layout="prev, pager, next" />
+          <el-pagination
+            :total="5"
+            layout="prev, pager, next"
+          />
         </div>
       </el-footer>
     </el-container>
@@ -40,14 +54,14 @@ import { debounce } from 'lodash'
 const RENDER_NUM = 4
 
 const compInfoStore = useCompInfoStore()
-const { list } = storeToRefs(compInfoStore)
+const list = ref([])
 const renderList = ref([])
 
 const params = {
   pageSize: 1,
   pageId: 0
 }
-onMounted(() => { 
+onMounted(() => {
   compInfoStore.getList(params)
 })
 
@@ -190,5 +204,3 @@ const jumpClick = (url) => {
   }
 }
 </style>
-
-

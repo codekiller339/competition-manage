@@ -4,23 +4,22 @@ import { ref } from 'vue';
 import router from "@/router"
 
 export const useUserStore = defineStore("user", () => {
-  const token = localStorage.getItem('token') || ""
+  const token = ref()
 
   function setToken(newToken) {
-    token.value = newToken;
-    localStorage.setItem('token', newToken);
+    token.value = newToken
+    localStorage.setItem('token', newToken)
   }
-  async function login(userData) {  
-    const { data } = await loginAPI(userData)
-    console.log(data);
-    setToken(data.token);
-    console.log("登录成功 token", token);
-    router.push('/')
+
+  async function login(userData) {
+    const res = await loginAPI(userData)
+    setToken(res.data.token)
+    console.log("登录成功 token", token)
   }
 
   function logout() {
-    console.log("退出登录");
-    token.value = "";
+    console.log("退出登录")
+    token.value = ""
 
     localStorage.removeItem('token')
   }

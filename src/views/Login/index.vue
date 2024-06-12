@@ -34,10 +34,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, toRaw } from "vue";
 // import { loginAPI } from "@/api/user"
 import { useUserStore } from "@/stores"
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const dataForm = ref({
   email: "",
@@ -47,11 +50,8 @@ const dataForm = ref({
 const { login } = useUserStore()
 
 const handleLogin = async () => {
-/*   const params = toRaw(dataForm.value)
-  const res = await loginAPI(params)
-  console.log(res) */
-  const res = await login(dataForm.value)
-  console.log(res)
+  await login(dataForm.value)
+  router.push('/')
 }
 
 </script>
