@@ -1,5 +1,7 @@
 {
   "compilerOptions" : {
+    // "target": "es6",          // 或者更高的版本，例如 "es2017"
+    "lib": ["dom", "es2015"], // 确保包含 "es2015" 或更高版本
     "baseUrl" : "./",
     "paths" : {
       "@/*":["src/*"]

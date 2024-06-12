@@ -36,15 +36,22 @@
 
 <script setup lang="ts">
 import { ref, toRaw } from "vue";
-import { loginAPI } from "@/api/user"
+// import { loginAPI } from "@/api/user"
+import { useUserStore } from "@/stores"
+
 const dataForm = ref({
   email: "",
   password: ""
 })
 
+const userStore = useUserStore()
+
 const handleLogin = async () => {
-  const params = toRaw(dataForm.value)
+/*   const params = toRaw(dataForm.value)
   const res = await loginAPI(params)
+  console.log(res) */
+  const params = toRaw(dataForm.value)
+  const res = await userStore.login(params)
   console.log(res)
 }
 

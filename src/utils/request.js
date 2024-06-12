@@ -16,7 +16,8 @@ service.interceptors.request.use(
   config => {
     // config 携带的就是请求信息, 并且return不能省略
     // 这个函数通常 配置请求头 携带token
-    const token = store.state.user?.token
+    // const token = store.state.user?.token
+    const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer: ${token}`
     }

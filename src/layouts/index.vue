@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <div>
     <el-container style="height: 100vh;">
@@ -21,7 +17,8 @@
                   <el-input placeholder="搜索" suffix-icon="el-icon-search" clearable v-model="searchText"></el-input>
                 </el-col>
                 <el-col :span="10" class="btn">
-                  <router-link to="/login"><el-button type="text">注册 / 登录</el-button></router-link>
+                  <el-button v-if="userStore.token" type="text" @click="jumpLogin">登录</el-button>
+                  <el-button v-else @click="Logout" type="text">退出登录</el-button>
                 </el-col>
               </el-row>
             </el-row>
@@ -34,6 +31,22 @@
     </el-container>
   </div>
 </template>
+
+<script setup>
+import router from '@/router';
+import { useUserStore } from "@/stores"
+
+const userStore = useUserStore()
+
+const jumpLogin = () => {
+  router.push("/login")
+}
+const Logout = () => {
+  userStore.logout()
+  router.push("/login") 
+}
+
+</script>
 
 <style lang="less">
 .el-header {
