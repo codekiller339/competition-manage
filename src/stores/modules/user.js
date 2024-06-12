@@ -20,7 +20,6 @@ export const useUserStore = defineStore("user", () => {
   function logout() {
     console.log("退出登录")
     token.value = ""
-
     localStorage.removeItem('token')
   }
 

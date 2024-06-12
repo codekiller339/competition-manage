@@ -40,7 +40,7 @@
                   >登录</el-button>
                   <el-button
                     v-else
-                    @click="Logout"
+                    @click="handleLogout"
                     type="text"
                   >退出登录</el-button>
                 </el-col>
@@ -60,13 +60,14 @@
 import router from '@/router';
 import { useUserStore } from "@/stores"
 
-const { token } = useUserStore()
+const token = localStorage.getItem('token')
+const { logout} = useUserStore()
 
 const jumpLogin = () => {
   router.push("/login")
 }
-const Logout = () => {
-  userStore.logout()
+const handleLogout = () => {
+  logout()
   router.push("/login")
 }
 

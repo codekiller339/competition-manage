@@ -50,6 +50,12 @@ import { useCompInfoStore } from '@/stores/index'
 import { storeToRefs } from 'pinia';
 import { ref, onMounted } from 'vue';
 import { debounce } from 'lodash'
+import { getListAPI } from "@/api/user"
+
+
+onMounted(() => {
+  getList()
+})
 
 const RENDER_NUM = 4
 
@@ -61,9 +67,14 @@ const params = {
   pageSize: 1,
   pageId: 0
 }
-onMounted(() => {
-  compInfoStore.getList(params)
-})
+
+const getList = async () => {
+  const res = await getListAPI(params)
+  list.value = res.data.list
+  // 初始化挂载
+  initRenderList()
+  console.log("list", list.value);
+}
 
 const initRenderList = () => {
   for (let i = renderList.value.length; i < RENDER_NUM && i < list.value.length; i++) {
@@ -89,8 +100,6 @@ window.addEventListener('scroll', function () {
   }
 }, false);
 
-// 初始化挂载
-initRenderList()
 
 // 跳转链接
 const jumpClick = (url) => {
