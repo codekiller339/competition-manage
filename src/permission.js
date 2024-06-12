@@ -1,4 +1,4 @@
-import router from "./router";
+/* import router from "./router";
 
 const WHITE_LIST = ['/login'];
 router.beforeEach((to, from, next) => {
@@ -13,4 +13,4 @@ router.beforeEach((to, from, next) => {
     }
   }
 }) 
- 
+  */

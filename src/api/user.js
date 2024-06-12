@@ -13,3 +13,19 @@ export const loginAPI = (data) => {
     data
   })
 }
+
+
+ /**
+ * @method 
+ * @description 首页列表
+ * @param e  {解释参数} 
+ * @author gkr 
+ * @createtime 2024-06-12 15:57:39
+ */
+export const getListAPI = (params) => {
+  return http({
+    url: "api/info/competition",
+    method: "GET",
+    params
+  })
+}
