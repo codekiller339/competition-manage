@@ -34,12 +34,6 @@
         </div>
       </el-main>
       <el-footer class="bottom">
-        <div class="pagination">
-          <el-pagination
-            :total="5"
-            layout="prev, pager, next"
-          />
-        </div>
       </el-footer>
     </el-container>
   </div>
