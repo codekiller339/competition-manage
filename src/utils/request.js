@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   // 基地址(每个接口都有的地址); 作用: 后面封装的接口, 接口的地址都会和baseURL自动拼接到一起
-  baseURL: 'http://10.200.59.220:9880/',
+  baseURL: 'http://10.210.177.147:9880/',
   // 超时时间
   timeout: 5000 // request timeout
 })

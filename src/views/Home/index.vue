@@ -59,7 +59,6 @@ onMounted(() => {
 
 const RENDER_NUM = 4
 
-const compInfoStore = useCompInfoStore()
 const list = ref([])
 const renderList = ref([])
 
@@ -73,13 +72,12 @@ const getList = async () => {
   list.value = res.data.list
   // 初始化挂载
   initRenderList()
-  console.log("list", list.value);
 }
 
 const initRenderList = () => {
   for (let i = renderList.value.length; i < RENDER_NUM && i < list.value.length; i++) {
     renderList.value.push(list.value[i])
-  }
+  }   
   console.log(renderList.value)
 }
 
