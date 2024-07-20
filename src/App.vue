@@ -10,6 +10,7 @@
 body {
   margin: 0;
   padding: 0;
+
 }
 
 ul,
@@ -20,4 +21,3 @@ div {
   list-style: none;
 }
 </style>
-
