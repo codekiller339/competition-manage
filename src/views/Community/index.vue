@@ -12,8 +12,8 @@ const flag = ref([
 
 const change = (id) => {
   console.log(id)
-  flag.value[id-1] = ~flag.value[id-1]
-  console.log(flag.value[id-1]);
+  flag.value[id - 1] = ~flag.value[id - 1]
+  console.log(flag.value[id - 1]);
 }
 
 const ff = ref(false)
@@ -25,30 +25,51 @@ const ff = ref(false)
     <div class="head">
       <div class="left">评论({{ userInfo.length }})</div>
       <ul>
-        <li><a href="" style="font-weight: 700; color: #000">推荐</a></li>
+        <li><a
+            href=""
+            style="font-weight: 700; color: #000"
+          >推荐</a></li>
         <li><a href="">最新</a></li>
       </ul>
     </div>
-    <div v-for="(item) in userInfo" :key="item.id" class="comment">     
-        <img @click="change(item.id)" src="../../assets/images/1.jpg" alt="图片未显示">
+    <div
+      v-for="(item) in userInfo"
+      :key="item.id"
+      class="comment"
+    >
+      <img
+        @click="change(item.id)"
+        src="../../assets/images/1.jpg"
+        alt="图片未显示"
+      >
       <div class="content">
-        <el-text class="mx-1" type="warning">未解决</el-text>
+        <el-text
+          class="mx-1"
+          type="warning"
+        >未解决</el-text>
         <span style="color: #909090 font-weight: 700;">{{ item.name }}</span>
         <small style="margin-top: 2px;">{{ item.time }}</small>
         <span class="text">{{ item.text }}</span>
       </div>
       <div class="info-card">
-        <el-card v-show="flag[item.id - 1]" class="box-card">
-        <template #header>
-          <div class="card-header">
-            <span>{{ item.name }}</span>
-            <el-button @click="change(item.id)" class="button" text>X</el-button>
-          </div>
-        </template>
-        <div>年级：{{ item.grade }}</div>
-        <div>专业：{{ item.major }}</div>
-        <template #footer>聊天</template>
-      </el-card>
+        <el-card
+          v-show="flag[item.id - 1]"
+          class="box-card"
+        >
+          <template #header>
+            <div class="card-header">
+              <span>{{ item.name }}</span>
+              <el-button
+                @click="change(item.id)"
+                class="button"
+                text
+              >X</el-button>
+            </div>
+          </template>
+          <div>年级：{{ item.grade }}</div>
+          <div>专业：{{ item.major }}</div>
+          <template #footer>聊天</template>
+        </el-card>
       </div>
     </div>
   </div>

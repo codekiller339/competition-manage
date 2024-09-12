@@ -7,23 +7,23 @@
             <li
               class="list-item"
               v-for="item in renderList"
-              :key="item.key"
+              :key="item?.id"
             >
               <div class="info">
                 <h3>
-                  <em>{{ item.status }}</em>
+                  <em>{{ item?.status }}</em>
                   <a
-                    :href="item.href"
+                    :href="item?.href"
                     target="_blank"
-                  >{{ item.name }}</a>
+                  >{{ item?.name }}</a>
                 </h3>
-                <p><span>主办方</span> {{ item.organizer }}</p>
-                <p><span>竞赛类别</span> {{ item.level }}</p>
+                <p><span>主办方</span> {{ item?.organizer }}</p>
+                <p><span>竞赛类别</span> {{ item?.level }}</p>
               </div>
               <div class="info-btn">
                 <el-row>
                   <el-button
-                    @click="jumpClick(item.href)"
+                    @click="jumpClick(item?.href)"
                     type="success"
                     plain
                   >比赛详情</el-button>
@@ -42,10 +42,12 @@
 <script setup>
 import { useCompInfoStore } from '@/stores/index'
 import { storeToRefs } from 'pinia';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { debounce } from 'lodash'
-import { getListAPI } from "@/api/user"
 
+const store = useCompInfoStore()
+const { setRenderList } = store
+const { list, renderList: renderListInner, searchValue } = storeToRefs(store)
 
 onMounted(() => {
   getList()
@@ -53,8 +55,14 @@ onMounted(() => {
 
 const RENDER_NUM = 4
 
-const list = ref([])
-const renderList = ref([])
+const renderList = computed({
+  get() {
+    return renderListInner.value
+  },
+  set(newVal) {
+    setRenderList(newVal)
+  }
+})
 
 const params = {
   pageSize: 1,
@@ -62,8 +70,7 @@ const params = {
 }
 
 const getList = async () => {
-  const res = await getListAPI(params)
-  list.value = res.data.list
+  await store.getList(params)
   // 初始化挂载
   initRenderList()
 }
@@ -71,8 +78,7 @@ const getList = async () => {
 const initRenderList = () => {
   for (let i = renderList.value.length; i < RENDER_NUM && i < list.value.length; i++) {
     renderList.value.push(list.value[i])
-  }   
-  console.log(renderList.value)
+  }
 }
 
 // 懒加载事件监听
@@ -80,12 +86,11 @@ window.addEventListener('scroll', function () {
   const clientHeight = document.documentElement.clientHeight;
   const scrollTop = document.documentElement.scrollTop;
   const scrollHeight = document.documentElement.scrollHeight;
-  if (clientHeight + scrollTop >= scrollHeight) {
+  if (clientHeight + scrollTop >= scrollHeight && !searchValue.value) {
     // 滚动加载 + 0.5s 防抖
     debounce(() => {
-      console.log(1)
       let i = RENDER_NUM
-      while (i--) {
+      while (i-- && renderList.value.length < list.value.length) {
         renderList.value.push(list.value[renderList.value.length])
       }
     }, 500)();

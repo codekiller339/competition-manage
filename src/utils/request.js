@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   // 基地址(每个接口都有的地址); 作用: 后面封装的接口, 接口的地址都会和baseURL自动拼接到一起
-  baseURL: 'http://10.210.177.147:9880/',
+  baseURL: 'http://127.0.0.1:5001',
   // 超时时间
   timeout: 5000 // request timeout
 })
@@ -33,7 +33,7 @@ service.interceptors.request.use(
 // 执行时机：当服务端返回数据的时候。数据流转的第一站 就是响应拦截器
 service.interceptors.response.use(
   response => {
-    if (response.data.code != 1) {
+    if (response.data.code != 0) {
       ElMessage.error(response.data.msg)
       return Promise.reject(response.data)
     } else {
@@ -52,7 +52,7 @@ service.interceptors.response.use(
     //   router.push('/login')
     // }
     // Message.error(error.response.data.msg)
-    console.log(error)
+    console.log('error', error)
     return Promise.reject(error)
   }
 )

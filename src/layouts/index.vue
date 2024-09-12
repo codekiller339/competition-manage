@@ -4,7 +4,7 @@
       <el-container>
         <el-header>
           <el-menu
-            default-active="/"
+            :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             router
@@ -15,6 +15,12 @@
             <el-menu-item index="/community">
               社区
             </el-menu-item>
+            <el-menu-item
+              index="/management"
+              v-if="isAuth"
+            >
+              后台录入系统
+            </el-menu-item>
 
             <el-row class="menu-right">
               <el-row :gutter="24">
@@ -23,14 +29,15 @@
                   class="search"
                 >
                   <el-input
+                    @input="() => handleSearch(searchValue)"
                     placeholder="搜索"
-                    suffix-icon="el-icon-search"
                     clearable
-                    v-model="searchText"
-                  ></el-input>
+                    v-model="searchValue"
+                    :prefix-icon="Search"
+                  />
                 </el-col>
                 <el-col
-                  :span="10"
+                  :span="5"
                   class="btn"
                 >
                   <el-button
@@ -43,6 +50,13 @@
                     @click="handleLogout"
                     type="text"
                   >退出登录</el-button>
+                </el-col>
+                <el-col
+                  v-if="token"
+                  :span="5"
+                  class="btn"
+                >
+                  <el-button type="text">{{ username }}</el-button>
                 </el-col>
               </el-row>
             </el-row>
@@ -57,19 +71,43 @@
 </template>
 
 <script setup>
-import router from '@/router';
-import { useUserStore } from "@/stores"
+import { ref, computed } from 'vue'
+import { Search } from '@element-plus/icons-vue'
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
 
-const token = localStorage.getItem('token')
-const { logout} = useUserStore()
+import router from '@/router';
+import { useCompInfoStore, useUserStore } from "@/stores"
+
+
+const userStore = useUserStore()
+const compInfoStore = useCompInfoStore()
+const { logout } = userStore
+const { handleSearch, setSearchValue } = compInfoStore
+const { username, token, isAuth } = storeToRefs(userStore)
+
+const route = useRoute()
+
+const activeIndex = ref(route.path)
+
+const searchValue = computed({
+  get() {
+    return compInfoStore.searchValue
+  },
+  set(newVal) {
+    setSearchValue(newVal)
+  }
+})
 
 const jumpLogin = () => {
   router.push("/login")
 }
+
 const handleLogout = () => {
   logout()
   router.push("/login")
 }
+
 
 </script>
 

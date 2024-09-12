@@ -36,7 +36,6 @@
 
 <script setup>
 import { ref } from "vue";
-// import { loginAPI } from "@/api/user"
 import { useUserStore } from "@/stores"
 import { useRouter } from "vue-router";
 

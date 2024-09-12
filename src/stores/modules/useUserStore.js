@@ -5,26 +5,38 @@ import router from "@/router"
 
 export const useUserStore = defineStore("user", () => {
   const token = ref()
+  const username = ref()
+  const isAuth = ref(false)
 
   function setToken(newToken) {
     token.value = newToken
-    localStorage.setItem('token', newToken)
+  }
+
+  function setUsername(newUsername) {
+    username.value = newUsername
+  }
+
+  function setIsAuth(val) {
+    isAuth.value = val
   }
 
   async function login(userData) {
     const res = await loginAPI(userData)
-    setToken(res.data.token)
-    console.log("登录成功 token", token)
+    setToken(res.data?.token || '')
+    setUsername(res.data?.username || '')
+    setIsAuth(res.data?.auth >= 1 || 0)
   }
 
   function logout() {
     console.log("退出登录")
     token.value = ""
-    localStorage.removeItem('token')
+    username.value = ""
   }
 
   return {
     token,
+    username,
+    isAuth,
     login,
     logout,
   };
