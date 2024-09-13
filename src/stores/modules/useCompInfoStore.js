@@ -9,7 +9,7 @@ export const useCompInfoStore = defineStore('compInfo', () => {
 
     const getList = async (params) => {
         const data = await getListAPI(params)
-        list.value = data.list
+        list.value = data.list.reverse()
     }
 
     const handleSearch = (value) => {

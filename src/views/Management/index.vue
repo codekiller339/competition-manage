@@ -70,42 +70,91 @@
     </div>
   </div>
 
-  <el-dialog v-model="isVisible" center :title="isEdit ? '新增竞赛' : '编辑竞赛'" width="500">
-    <el-form 
+  <el-dialog
+    v-model="isVisible"
+    center
+    :title="isEdit ? '编辑竞赛' : '新增竞赛'"
+    width="500"
+  >
+    <el-form
       ref="formRef"
       :model="formInfo"
       :rules="rules"
       label-width="auto"
       style="width: 70%; margin: 0 auto;"
     >
-      <el-form-item prop="name" label="标题:" >
-        <el-input v-model="formInfo.name"  />
+      <el-form-item
+        prop="name"
+        label="标题:"
+      >
+        <el-input v-model="formInfo.name" />
       </el-form-item>
-      <el-form-item prop="status" label="状态:" >
-        <el-select v-model="formInfo.status" placeholder="请选择状态" style="width: 100%;">
-          <el-option label="正在报名" value="1" />
-          <el-option label="报名结束" value="0" />
-          <el-option label="已结束" value="-1" />
+      <el-form-item
+        prop="status"
+        label="状态:"
+      >
+        <el-select
+          v-model="formInfo.status"
+          placeholder="请选择状态"
+          style="width: 100%;"
+        >
+          <el-option
+            label="正在报名"
+            value="正在报名"
+          />
+          <el-option
+            label="报名结束"
+            value="报名结束"
+          />
+          <el-option
+            label="已结束"
+            value="已结束"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item prop="organizer" label="主办方:" >
-        <el-input v-model="formInfo.organizer"  />
+      <el-form-item
+        prop="organizer"
+        label="主办方:"
+      >
+        <el-input v-model="formInfo.organizer" />
       </el-form-item>
-      <el-form-item prop="level" label="竞赛类别:" >
-        <el-select v-model="formInfo.level" placeholder="请选择级别" style="width: 100%;">
-          <el-option label="校级" value="0" />
-          <el-option label="省赛" value="1" />
-          <el-option label="全国" value="2" />
+      <el-form-item
+        prop="level"
+        label="竞赛类别:"
+      >
+        <el-select
+          v-model="formInfo.level"
+          placeholder="请选择级别"
+          style="width: 100%;"
+        >
+          <el-option
+            label="校级"
+            value="校级"
+          />
+          <el-option
+            label="省赛"
+            value="省赛"
+          />
+          <el-option
+            label="全国"
+            value="全国"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item prop="href" label="链接:" >
+      <el-form-item
+        prop="href"
+        label="链接:"
+      >
         <el-input v-model="formInfo.href" />
       </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="isVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirmBtn">
+        <el-button
+          type="primary"
+          @click="confirmBtn"
+        >
           确认
         </el-button>
       </div>
@@ -132,20 +181,20 @@ const searchValue = ref('')
 const isVisible = ref(false)
 const isEdit = ref(false)
 const formRef = ref(null)
-const formInfo = reactive({
+const formInfo = ref({
   id: null,
   name: "",
-  status: "1",
+  status: "正在报名",
   organizer: "",
   level: "",
   href: ""
 })
 const rules = reactive({
   name: [
-    { required: true, message: "标题为必选", trigger: 'blur' }
+    { required: true, message: "请输入标题", trigger: 'blur' }
   ],
   status: [
-    { required: true }
+    { required: true, message: "状态为必选", trigger: 'blur' }
   ],
   organizer: [
     { required: true, message: "请输入主办方信息", trigger: 'blur' }
@@ -191,7 +240,7 @@ const handleEdit = async (row) => {
     id: row.id
   }
   const curItem = await getListAPI(params)
-  formInfo = { ...curItem } 
+  formInfo.value = { ...curItem.list[0] }
   isVisible.value = true
 }
 
@@ -214,12 +263,12 @@ const handleDelete = (row) => {
 }
 
 const handleAppend = async (row) => {
-/*   const params = {
-    id: row.id
-  }
-  await addListItemAPI(params) */
+  /*   const params = {
+      id: row.id
+    }
+    await addListItemAPI(params) */
   isEdit.value = false
-  formInfo = {
+  formInfo.value = {
     id: null,
     name: '',
     status: '',
@@ -230,22 +279,23 @@ const handleAppend = async (row) => {
   isVisible.value = true
   formRef.value.resetFields()
 }
-const confirmBtn  =() => {
+
+const confirmBtn = debounce(() => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       if (isEdit.value) {
-        await updateListItemAPI(formInfo)
-        ElMessage.success('编辑成功')
+        await updateListItemAPI(formInfo.value)
       } else {
-        await addListItemAPI(formInfo)
-        ElMessage.success('添加成功')
-      }     
+        await addListItemAPI(formInfo.value)
+      }
       await getListAPI()
+      getList()
       isVisible.value = false
+    } else {
+      ElMessage.error('请确认信息完整')
     }
-     ElMessage.error('请确认信息完整')
   })
-}
+}, 300)
 
 // 初始化
 getList()

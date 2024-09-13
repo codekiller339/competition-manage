@@ -23,7 +23,7 @@ export const useUserStore = defineStore("user", () => {
   async function login(userData) {
     const res = await loginAPI(userData)
     setToken(res.data?.token || '')
-    setUsername(res.data?.username || '')
+    setUsername(res.data?.auth >= 1 ? res.data?.username + '（管理员）' : res.data?.username || '')
     setIsAuth(res.data?.auth >= 1 || 0)
   }
 

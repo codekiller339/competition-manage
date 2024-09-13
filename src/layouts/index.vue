@@ -25,7 +25,7 @@
             <el-row class="menu-right">
               <el-row :gutter="24">
                 <el-col
-                  :span="14"
+                  :span="10"
                   class="search"
                 >
                   <el-input
@@ -53,7 +53,7 @@
                 </el-col>
                 <el-col
                   v-if="token"
-                  :span="5"
+                  :span="9"
                   class="btn"
                 >
                   <el-button type="text">{{ username }}</el-button>
@@ -183,7 +183,7 @@ const handleLogout = () => {
 .menu-right {
   margin-left: auto;
   padding: 0;
-  width: 30%;
+  width: 40%;
   /* 将内容推到最右侧 */
   display: flex;
   align-items: center;
